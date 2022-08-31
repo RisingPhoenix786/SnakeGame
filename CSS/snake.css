@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+:root{
+    --score-color: rgb(247, 247, 247);
+}
+
 body{
     min-height: 100vh;
     background: url(../Images/Snake-Pass-4K-Wallpaper-2.jpg);
@@ -40,12 +44,39 @@ body{
    border: 2px solid whitesmoke;
    box-shadow: 0 0 15px rgb(111, 34, 255);
     background-color: rgb(0, 0, 0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#scoreBox2{
+    font-size: 2vmax;
+    font-family: monospace;
+    color: var(--score-color);
+}
+
+#highScoreBox{
+    font-size: 2vmax;
+    font-family: monospace;
+    color: var(--score-color);
+}
+
+#levelBox{
+    font-size: 2vmax;
+    font-family: monospace;
+    color: var(--score-color);
 }
 
 .head{
-    background:url();
+    background:url(../Images/snake.svg);
+    background-size: cover;
     border-radius: 40%;
-    border: 1px solid black;
+    /* border: 1px solid black; */
+}
+
+.headUp{
+    transform: rotate(180deg);
 }
 
 .snakeBody{

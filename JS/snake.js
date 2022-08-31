@@ -3,15 +3,26 @@ const gameOver=new Audio("../Music/gameover.mp3");
 const move=new Audio("../Music/move.mp3");
 const music=new Audio("../Music/music.mp3");
 
+
+
 let direction={x:0 , y:0};
 let lastPaintTime;
 let speed=2;
 let snakeArray= [{x:5,y:5},{x:4,y:5}];
 let score=0;
+let level=1;
 
 localStorage.setItem('highScore',JSON.stringify(0));
 
+
+
 let board=document.getElementById('board');
+let highScoreBox=document.getElementById('highScoreBox');
+let scoreBox2=document.getElementById('scoreBox2');
+let levelBox=document.getElementById('levelBox')
+
+highScoreBox.innerText=`Highscore- ${localStorage.getItem('highscore')}`
+levelBox.innerHTML=`Level- ${level}`
 
 let a = 2;
 let b = 16;
@@ -37,13 +48,31 @@ function loop(currTime){
 function gameEngine(){
 
     board.innerHTML="";
-   
+    
+    
+
+    if(isAlive){
+
+        scoreBox2.innerText=`Current Score- ${score}`;
+        levelBox.innerText=`Level- ${level}`;
+        if(score!=0 && score%5==0){
+            speed=2+(score/5);
+            level=1+(score/5);
+        }
+    }
 
     if(isCollided()){
         isAlive=false;
         gameOver.play();
         music.pause();
-        
+        let lastHighscore= localStorage.getItem('highscore');
+        if(score>lastHighscore){
+            localStorage.setItem('highscore',JSON.stringify(score));
+            highScoreBox.innerText=`Highscore- ${score}`;
+        }
+        score=0;
+        level=1;
+        speed=2;
         let userInp=confirm("Game Over");
      
         
@@ -79,8 +108,6 @@ function gameEngine(){
 
         score++;
         
-        
-
          foodPos = {x: Math.round(a + (b-a)* Math.random()), y: Math.round(a + (b-a)* Math.random())};
          food.style.gridColumnStart=foodPos.x;
          food.style.gridRowStart=foodPos.y;
@@ -169,6 +196,7 @@ window.addEventListener('keydown',(e)=>{
     if(key==='ArrowUp'){
         direction.y=-1;
         direction.x=0;
+      
     }
     else if(key==='ArrowDown'){
         direction.y=1;
